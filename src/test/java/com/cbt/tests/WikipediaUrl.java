@@ -7,31 +7,32 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class AmazonTitle {
+public class WikipediaUrl {
+
     WebDriver driver;
 
     @Test
     public void test1() throws InterruptedException{
         driver = BrowserFactory.getDriver("chrome");
+        driver.get("https://www.wikipedia.org/");
 
-        driver.get("https://www.amazon.com/");
+        driver.findElement(By.id("searchInput")).sendKeys("selenium webdriver");
+        WebElement searchButton = driver.findElement(By.xpath("//button[@class = 'pure-button pure-button-primary-progressive']"));
 
-        Thread.sleep(2000);
-        driver.findElement(By.id("twotabsearchtextbox")).sendKeys("Monitor");
-
-        WebElement searchButton = driver.findElement(By.className("nav-input"));
         searchButton.click();
 
-        if(driver.getTitle().contains("Monitor")){
+        Thread.sleep(2000);
+
+        driver.findElement(By.partialLinkText("Selenium (software)")).click();
+
+        Thread.sleep(2000);
+
+        if(driver.getCurrentUrl().endsWith("Selenium_(software)")){
             System.out.println("PASS");
         }else{
             System.out.println("FAIL");
         }
 
-        Thread.sleep(2000);
-
         driver.quit();
     }
-
-
 }
